@@ -47,6 +47,15 @@ class Authorize {
     // If time has expired then unset the access token session.
     if (isset($_SESSION['imgur_expires_in']) && isset($_SESSION['imgur_access_token']) && $_SESSION['imgur_expires_in'] <= time()) {
       unset($_SESSION['imgur_access_token']);
+      // Automatic regeneration of access token
+      if (isset($_SESSION['imgur_refresh_token'])) {
+        $session = $this->getToken($_SESSION['imgur_refresh_token']);
+        if ($session) {
+          $_SESSION['imgur_access_token'] = $session->access_token;
+          $_SESSION['imgur_expires_in'] = $session->expires_in + time();
+          $_SESSION['imgur_refresh_token'] = $session->refresh_token;
+        }
+      }
     }
     if (isset($_SESSION['imgur_access_token'])) {
       return true;
