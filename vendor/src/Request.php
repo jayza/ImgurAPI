@@ -1,15 +1,12 @@
 <?php
 class Request {
-  private $access_token;
   public $api_url = 'https://api.imgur.com/3/';
 
-  function __construct($access_token) {
-    $this->access_token = $access_token;
-  }
-
   function get($endpoint) {
+    $session = new Session;
+
     $headers = array(
-      'Authorization: Bearer ' . $this->access_token,
+      'Authorization: Bearer ' . $session->getAccessToken(),
     );
 
     $ch = curl_init($this->api_url . $endpoint);

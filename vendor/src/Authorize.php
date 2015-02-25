@@ -40,24 +40,37 @@ class Authorize {
     $response = curl_exec($ch);
     curl_close($ch);
 
-    return json_decode($response);
+    $response = json_decode($response);
+
+    if ($response->access_token) {
+      $session = new Session;
+      $session->setSession('imgur_access_token', $response->access_token);
+      $session->setSession('imgur_expires_in', $response->expires_in + time());
+
+      if ($response->refresh_token) {
+        $session->setSession('imgur_refresh_token', $response->refresh_token);
+      }
+    }
+
+    return $response;
   }
 
   function checkAccess() {
+    $session = new Session;
     // If time has expired then unset the access token session.
-    if (isset($_SESSION['imgur_expires_in']) && isset($_SESSION['imgur_access_token']) && $_SESSION['imgur_expires_in'] <= time()) {
+    if ($session->expired()) {
       unset($_SESSION['imgur_access_token']);
       // Automatic regeneration of access token
-      if (isset($_SESSION['imgur_refresh_token'])) {
+      if ($session->getRefreshToken()) {
         $session = $this->getToken($_SESSION['imgur_refresh_token']);
         if ($session) {
-          $_SESSION['imgur_access_token'] = $session->access_token;
-          $_SESSION['imgur_expires_in'] = $session->expires_in + time();
-          $_SESSION['imgur_refresh_token'] = $session->refresh_token;
+          $session->setSession('imgur_access_token', $session->access_token);
+          $session->setSession('imgur_expires_in', $session->expires_in + time());
+          $session->setSession('imgur_refresh_token', $session->refresh_token);
         }
       }
     }
-    if (isset($_SESSION['imgur_access_token'])) {
+    if ($session->ready()) {
       return true;
     }
     return false;
