@@ -62,11 +62,11 @@ class Authorize {
       unset($_SESSION['imgur_access_token']);
       // Automatic regeneration of access token
       if ($session->getRefreshToken()) {
-        $session = $this->getToken($_SESSION['imgur_refresh_token']);
+        $refresh = $this->getToken($_SESSION['imgur_refresh_token']);
         if ($session) {
-          $session->setSession('imgur_access_token', $session->access_token);
-          $session->setSession('imgur_expires_in', $session->expires_in + time());
-          $session->setSession('imgur_refresh_token', $session->refresh_token);
+          $session->setSession('imgur_access_token', $refresh->access_token);
+          $session->setSession('imgur_expires_in', $refresh->expires_in + time());
+          $session->setSession('imgur_refresh_token', $refresh->refresh_token);
         }
       }
     }
