@@ -1,50 +1,49 @@
 <?php
 class Session {
-  private $access_token = FALSE;
-  private $refresh_token = FALSE;
-  private $expires_in = FALSE;
+  /**
+  * @var string|false Should contain a access token or FALSE otherwise.
+  * @var string|false Should contain a refresh token or FALSE otherwise.
+  * @var int|false Should contain a UNIX Timestamp integer or FALSE otherwise.
+  */
+  private $access_token;
+  private $refresh_token;
+  private $expires_in;
   
-  function __construct() {
-    if ($_SESSION['imgur_access_token']) {
-      $this->access_token = $_SESSION['imgur_access_token'];
-    }
-    if ($_SESSION['imgur_refresh_token']) {
-      $this->refresh_token = $_SESSION['imgur_refresh_token'];
-    }
-    if ($_SESSION['imgur_expires_in']) {
-      $this->expires_in = $_SESSION['imgur_expires_in'];
-    }
+  public function __construct() {
+    $this->access_token = isset($_SESSION['imgur_access_token']) ? $_SESSION['imgur_access_token'] : FALSE;
+    $this->refresh_token = isset($_SESSION['imgur_refresh_token']) ? $_SESSION['imgur_refresh_token'] : FALSE;
+    $this->expires_in = isset($_SESSION['imgur_expires_in']) ? $_SESSION['imgur_expires_in'] : FALSE;;
   }
 
-  function getAccessToken() {
-    if ($this->access_token) {
-      return $this->access_token;
-    }
-    return FALSE;
+  /**
+  * Function to get access token.
+  * @return string|false Depending if the access token is saved in session
+  */
+  public function getAccessToken() {
+    return isset($this->access_token) ? $this->access_token : FALSE;
   }
 
-  function getRefreshToken() {
-    if($this->refresh_token) {
-      return $this->refresh_token;
-    }
-    return FALSE;
+  /**
+  * Function to get refresh token.
+  * @return string|false Depending if the refresh token is saved in session
+  */
+  public function getRefreshToken() {
+    return isset($this->refresh_token) ? $this->refresh_token : FALSE;
   }
 
-  function ready() {
-    if ($this->access_token) {
-      return TRUE;
-    }
-    return FALSE;
+  /**
+  * Function to determine whether or not the access token time has expired.
+  * @return bool TRUE if expired and FALSE otherwise
+  */
+  public function expired() {
+    return ($this->expires_in <= time()) ? TRUE : FALSE;
   }
 
-  function expired() {
-    if ($this->expires_in <= time()) {
-      return TRUE;
-    }
-    return FALSE;
-  }
-
-  function setSession($name, $value) {
+  /**
+  * Function to set a session.
+  * @return void
+  */
+  public function setSession($name, $value) {
     $_SESSION[$name] = $value;
   }
 }
