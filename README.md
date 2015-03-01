@@ -42,7 +42,11 @@ example index.php
 
     var_dump($account);
   } else {
-    print '<a href="<?php Settings::getPublic('auth_url'); ?>">Log in</a>';
+  ?>
+  
+  <a href="<?php Settings::getPublic('auth_url'); ?>">Log in</a>
+  
+  <?php
   }
 ```
 

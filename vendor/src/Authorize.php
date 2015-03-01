@@ -79,7 +79,7 @@ class Authorize {
       
       if ($session->getRefreshToken()) {
         $refresh = $this->getToken($_SESSION['imgur_refresh_token']);
-        if($refresh->access_token) {
+        if ($refresh->access_token) {
           $session->setSession('imgur_access_token', $refresh->access_token);
           $session->setSession('imgur_expires_in', $refresh->expires_in + time());
           $session->setSession('imgur_refresh_token', $refresh->refresh_token);
