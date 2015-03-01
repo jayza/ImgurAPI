@@ -6,6 +6,29 @@ It is meant to be a learning experience for me, but the goal is that this softwa
 
 Current version: 0.1.0
 
+### Current Features
+
+* Connect to the Imgur API via OAuth2.0.
+* Send GET requests.
+
+### Future Plans
+
+* Send POST, PUT, DELETE requests.
+    * Image support
+    * Gallery support
+    * Commenting support
+
+* A general method to get viral, hot or a specific sorting for the following
+    * Images
+    * Galleries
+    * Comments
+
+* And more.....
+
+### Known Issues
+
+At the moment there are no known issues. If you are experiencing any issues then submit an issue, please!
+
 ## Documentation
 
 In order to make this work, you need to register an application with Imgur. To do that you can check out this URL [Imgur API Documentation](https://api.imgur.com/). After getting your hands on the Client ID and Client Secret of your application you need to configure. *Work work*
