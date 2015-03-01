@@ -6,6 +6,10 @@ It is meant to be a learning experience for me, but the goal is that this softwa
 
 Current version: 0.1.0
 
+### Dependencies
+
+PHP >= 5.2.0
+
 ### Current Features
 
 * Connect to the Imgur API via OAuth2.0.
@@ -17,6 +21,8 @@ Current version: 0.1.0
     * Image support
     * Gallery support
     * Commenting support
+
+* Error Handling
 
 * A general method to get viral, hot or a specific sorting for the following
     * Images
@@ -31,7 +37,7 @@ At the moment there are no known issues. If you are experiencing any issues then
 
 ## Documentation
 
-In order to make this work, you need to register an application with Imgur. To do that you can check out this URL [Imgur API Documentation](https://api.imgur.com/). After getting your hands on the Client ID and Client Secret of your application you need to configure. *Work work*
+In order to make this work, you need to register an application with Imgur. To do that you can check out the [Imgur API Documentation](https://api.imgur.com/). After getting your hands on the Client ID and Client Secret of your application you need to configure the settings. *Work work*
 
 Autoload.php
 
