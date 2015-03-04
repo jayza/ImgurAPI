@@ -4,7 +4,7 @@ It is meant to be a learning experience for me, but the goal is that this softwa
 
 ## Current Version
 
-Current version: 0.1.0
+Current version: 0.2.0
 
 ### Dependencies
 
@@ -13,16 +13,12 @@ PHP >= 5.2.0
 ### Current Features
 
 * Connect to the Imgur API via OAuth2.0.
-* Send GET requests.
+* Send GET, POST, PUT, DELETE requests.
+* Error handling for requests.
 
 ### Future Plans
 
-* Send POST, PUT, DELETE requests.
-    * Image support
-    * Gallery support
-    * Commenting support
-
-* Error Handling
+* Easy way to upload images, galleries and other things.
 
 * A general method to get viral, hot or a specific sorting for the following
     * Images
@@ -66,10 +62,14 @@ example index.php
   if ($auth->checkAccess()) {
     $request = new Request();
     
-    // Use the Request class and get information about the logged in users account
-    $account = $request->get('account/me');
-
-    var_dump($account);
+    // Use the Request class and get information about the logged in users account.
+    // If the request would fail, then a ImgurException would be thrown with the 
+    // message and code from Imgur.
+    try {
+      $account = $request->get('account/me');
+    } catch(ImgurException $e) {
+      print $e->message();
+    }
   } else {
   ?>
   
