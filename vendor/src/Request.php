@@ -23,10 +23,14 @@ class Request {
     $ch = curl_init(Settings::getPublic('api_url') . $endpoint);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    $response = curl_exec($ch);
+    $response = json_decode(curl_exec($ch));
     curl_close($ch);
 
-    return json_decode($response);
+    if (!$response->success) {
+      throw new ImgurException($response->data->error, $response->status);
+    }
+
+    return $response;
   }
 
   /**
@@ -45,10 +49,14 @@ class Request {
     curl_setopt($ch, CURLOPT_POST, TRUE);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    $response = curl_exec($ch);
+    $response = json_decode(curl_exec($ch));
     curl_close($ch);
 
-    return json_decode($response);
+    if (!$response->success) {
+      throw new ImgurException($response->data->error, $response->status);
+    }
+
+    return $response;
   }
 
   /**
@@ -67,10 +75,14 @@ class Request {
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    $response = curl_exec($ch);
+    $response = json_decode(curl_exec($ch));
     curl_close($ch);
 
-    return json_decode($response);
+    if (!$response->success) {
+      throw new ImgurException($response->data->error, $response->status);
+    }
+
+    return $response;
   }
 
   /**
@@ -87,9 +99,13 @@ class Request {
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    $response = curl_exec($ch);
+    $response = json_decode(curl_exec($ch));
     curl_close($ch);
 
-    return json_decode($response);
+    if (!$response->success) {
+      throw new ImgurException($response->data->error, $response->status);
+    }
+
+    return $response;
   }
 }
