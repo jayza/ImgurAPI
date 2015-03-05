@@ -13,6 +13,8 @@ PHP >= 5.2.0
 ### Current Features
 
 * Connect to the Imgur API via OAuth2.0.
+* Support for connecting using either authorization code or pin.
+    * _(Since the token authorization type responds with a hash query im gonna leave it out)_
 * Send GET, POST, PUT, DELETE requests.
 * Error handling for requests.
 
@@ -71,12 +73,25 @@ example index.php
       print $e->message();
     }
   } else {
-  ?>
-  
-  <a href="<?php Settings::getPublic('auth_url'); ?>">Log in</a>
-  
-  <?php
+
+    // If you want a simple login link you can use the auth url setting
+    ?>
+    <a href="<?php Settings::getPublic('auth_url'); ?>">Log in</a>
+    <?php
+
+    // Or if you are connecting by pin code, just make a simple form with these two fields
+    if (Settings::getCredential('grant_type') == 'pin'): 
+    ?>
+      <form method="GET" action="<?php $_SERVER['PHP_SELF']; ?>">
+        <input type="hidden" name="state" value="<?php print Settings::getPublic('auth_state'); ?>">
+        <input type="text" name="code">
+        <input type="submit">
+      </form>
+    <?php
+    endif;
   }
 ```
 
 And that's as simple as it gets. If you want to learn more about the different Imgur Endpoints, then you can hit up the [Imgur API Documentation](https://api.imgur.com/) and read up!
+
+If you want to contact me, you can look me up on twitter [@jzasnake](http://twitter.com/jzasnake)!

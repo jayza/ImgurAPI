@@ -1,13 +1,15 @@
 <?php
 class Authorize {
   /**
-  * @var string Contains the client id that has been given from registering an application on Imgur.
-  * @var string Contains the client secret that has been given from registering an application on Imgur.
-  * @var string|false Should contain an authorization code which is given from Imgur when logging in otherwise FALSE.
+  * @var string $client_id Contains the client id that has been given from registering an application on Imgur.
+  * @var string $client_secret Contains the client secret that has been given from registering an application on Imgur.
+  * @var string|false $code Should contain an authorization code which is given from Imgur when logging in otherwise FALSE.
+  * @var string $code_type Contains the code type, either code or pin.
   */
   private $client_id;
   private $client_secret;
   private $code;
+  private $code_type;
 
   public function __construct() {
     $this->client_id = Settings::getCredential('client_id');
@@ -16,8 +18,15 @@ class Authorize {
       ? $_GET['code'] : FALSE;
 
     if ($this->code) {
+
+      if (Settings::getCredential('grant_type') == 'authorization_code') {
+        $this->code_type = 'code';
+      } elseif (Settings::getCredential('grant_type') == 'pin') {
+        $this->code_type = 'pin';
+      } 
+
       $this->getToken();
-    }
+    } 
   }
 
   /**
@@ -36,8 +45,8 @@ class Authorize {
       $data = array(
         'client_id' => $this->client_id,
         'client_secret' => $this->client_secret,
-        'grant_type' => 'authorization_code',
-        'code' => $this->code,
+        'grant_type' => Settings::getCredential('grant_type'),
+        $this->code_type => $this->code,
       );
     }
 

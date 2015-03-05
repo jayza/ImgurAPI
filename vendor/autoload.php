@@ -14,12 +14,16 @@ function __autoload($class) {
 
 Settings::setCredential('client_id', 'YOUR-CLIENT-ID');
 Settings::setCredential('client_secret', 'YOUR-CLIENT-SECRET');
+Settings::setCredential('grant_type', 'authorization_code');
 
 Settings::setPublic('api_url', 'https://api.imgur.com/3/');
 Settings::setPublic('token_url', 'https://api.imgur.com/oauth2/token');
 Settings::setPublic(
   'auth_url', 
-  'https://api.imgur.com/oauth2/authorize?response_type=code&client_id=' . Settings::getCredential('client_id') . '&state=authorizing'
+  'https://api.imgur.com/oauth2/authorize?response_type=' . 
+    Settings::getCredential('grant_type') . 
+    '&client_id=' . Settings::getCredential('client_id') . 
+    '&state=authorizing'
 );
 Settings::setPublic('auth_state', 'YOUR-AUTH-STATE');
 ?>
