@@ -1,9 +1,9 @@
 <?php
 class Session {
   /**
-  * @var string|false Should contain a access token or FALSE otherwise.
-  * @var string|false Should contain a refresh token or FALSE otherwise.
-  * @var int|false Should contain a UNIX Timestamp integer or FALSE otherwise.
+  * @var string|false $access_token Should contain a access token or FALSE otherwise.
+  * @var string|false $refresh_token Should contain a refresh token or FALSE otherwise.
+  * @var int|false $expires_in Should contain a UNIX Timestamp integer or FALSE otherwise.
   */
   private $access_token;
   private $refresh_token;
