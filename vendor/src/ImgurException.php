@@ -5,10 +5,18 @@ class ImgurException extends Exception {
     parent::__construct($message, $code);
   }
 
+  /**
+  * Return the Exception class' message variable.
+  * @return string 
+  */
   public function message() {
     return parent::getMessage();
   }
 
+  /**
+  * Return the Exception class' message variable.
+  * @return string 
+  */
   public function code() {
     return parent::getCode();
   }
