@@ -10,7 +10,7 @@ class ImgurException extends Exception {
   * @return string 
   */
   public function message() {
-    return parent::getMessage();
+    return parent::getMessage() . "\n";
   }
 
   /**
