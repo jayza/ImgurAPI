@@ -42,7 +42,7 @@ class Request {
   * @param array $data Array of data to send in the POST request.
   * @return Request Object contains the response data from Imgur (see Imgur Developer Documentation).
   */
-  public function post($endpoint, $data) {
+  public function post($endpoint, $data = array()) {
     $headers = array(
       'Authorization: Bearer ' . $this->access_token,
     );
@@ -69,7 +69,7 @@ class Request {
   * @param array $data Array of data to send in the PUT request.
   * @return Request Object contains the response data from Imgur (see Imgur Developer Documentation).
   */
-  public function put($endpoint, $data) {
+  public function put($endpoint, $data = array()) {
     $headers = array(
       'Authorization: Bearer ' . $this->access_token,
     );
@@ -96,7 +96,7 @@ class Request {
   * @param array $data Array of data to send in the DELETE request.
   * @return Request Object contains the response data from Imgur (see Imgur Developer Documentation).
   */
-  public function delete($endpoint, $data) {
+  public function delete($endpoint, $data = array()) {
     $headers = array(
       'Authorization: Bearer ' . $this->access_token,
     );
