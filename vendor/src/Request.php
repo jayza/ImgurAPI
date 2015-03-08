@@ -4,6 +4,7 @@ class Request {
   * @var string $access_token The access token that is given from the Session class
   */
   private $access_token;
+  private $response;
 
   public function __construct() {
     $session = new Session();
@@ -13,7 +14,7 @@ class Request {
   /**
   * Function to make a GET request to the Imgur REST API.
   * @param string $endpoint API Endpoint from the Imgur API.
-  * @return object Object contains the response data from Imgur (see Imgur Developer Documentation).
+  * @return Request Object contains the response data from Imgur (see Imgur Developer Documentation).
   */
   public function get($endpoint) {
     $headers = array(
@@ -30,14 +31,15 @@ class Request {
       throw new ImgurException($response->data->error, $response->status);
     }
 
-    return $response;
+    $this->response = $response;
+    return $this;
   }
 
   /**
   * Function to make a POST request to the Imgur REST API.
   * @param string $endpoint API Endpoint from the Imgur API.
   * @param array $data Array of data to send in the POST request.
-  * @return object Object contains the response data from Imgur (see Imgur Developer Documentation).
+  * @return Request Object contains the response data from Imgur (see Imgur Developer Documentation).
   */
   public function post($endpoint, $data) {
     $headers = array(
@@ -56,14 +58,15 @@ class Request {
       throw new ImgurException($response->data->error, $response->status);
     }
 
-    return $response;
+    $this->response = $response;
+    return $this;
   }
 
   /**
   * Function to make a PUT request to the Imgur REST API.
   * @param string $endpoint API Endpoint from the Imgur API.
   * @param array $data Array of data to send in the PUT request.
-  * @return object Object contains the response data from Imgur (see Imgur Developer Documentation).
+  * @return Request Object contains the response data from Imgur (see Imgur Developer Documentation).
   */
   public function put($endpoint, $data) {
     $headers = array(
@@ -82,13 +85,14 @@ class Request {
       throw new ImgurException($response->data->error, $response->status);
     }
 
-    return $response;
+    $this->response = $response;
+    return $this;
   }
 
   /**
   * Function to make a DELETE request to the Imgur REST API.
   * @param string $endpoint API Endpoint from the Imgur API.
-  * @return object Object contains the response data from Imgur (see Imgur Developer Documentation).
+  * @return Request Object contains the response data from Imgur (see Imgur Developer Documentation).
   */
   public function delete($endpoint) {
     $headers = array(
@@ -106,6 +110,19 @@ class Request {
       throw new ImgurException($response->data->error, $response->status);
     }
 
-    return $response;
+    $this->response = $response;
+    return $this;
+  }
+
+  /**
+  * This is used for when you want to output your response object, use it as a chaining method.
+  * @param string $type Either object or json.
+  * @return object Outputs the Request response encoded into JSON.
+  */
+  public function output($type = 'object') {
+    if ($type == 'json') {
+      return json_encode($this->response->data);
+    }
+    return $this->response->data;
   }
 }

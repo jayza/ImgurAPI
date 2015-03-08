@@ -4,7 +4,7 @@ It is meant to be a learning experience for me, but the goal is that this softwa
 
 ## Current Version
 
-Current version: 0.2.0
+Current version: 0.2.1
 
 ### Dependencies
 
@@ -17,6 +17,7 @@ PHP >= 5.2.0
     * _(Since the token authorization type responds with a hash query im gonna leave it out)_
 * Send GET, POST, PUT, DELETE requests.
 * Error handling for requests.
+* Output the response data from requests to JSON.
 
 ### Future Plans
 
@@ -64,11 +65,17 @@ example index.php
   if ($auth->checkAccess()) {
     $request = new Request();
     
-    // Use the Request class and get information about the logged in users account.
-    // If the request would fail, then a ImgurException would be thrown with the 
-    // message and code from Imgur.
+    /** 
+    * Use the Request class and get information about the logged in users account.
+    * If the request would fail, then a ImgurException would be thrown with the 
+    * message and code from Imgur.
+    *
+    * It is also possible to output the response object to JSON or stdClass using the output() method.
+    */
     try {
       $account = $request->get('account/me');
+
+      print $account->output('json');
     } catch(ImgurException $e) {
       print $e->message();
     }
