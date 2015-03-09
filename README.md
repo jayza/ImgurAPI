@@ -4,7 +4,7 @@ It is meant to be a learning experience for me, but the goal is that this softwa
 
 ## Current Version
 
-Current version: 0.2.1
+Current version: 0.3.0
 
 ### Dependencies
 
@@ -18,6 +18,9 @@ PHP >= 5.2.0
 * Send GET, POST, PUT, DELETE requests.
 * Error handling for requests.
 * Output the response data from requests to JSON.
+* Model-specific classes that has methods to use as shorthand, such as:
+    * Image has find, upload, delete, edit, favorite, publish/unpublish.
+    * More coming.
 
 ### Future Plans
 
