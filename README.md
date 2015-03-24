@@ -80,7 +80,7 @@ example index.php
 
       print $account->output('json');
     } catch(ImgurException $e) {
-      print $e->message();
+      print $e->getMessage();
     }
   } else {
 

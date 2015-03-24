@@ -14,7 +14,7 @@ function __autoload($class) {
 
 Settings::setCredential('client_id', 'YOUR-CLIENT-ID');
 Settings::setCredential('client_secret', 'YOUR-CLIENT-SECRET');
-Settings::setCredential('grant_type', 'authorization_code');
+Settings::setCredential('grant_type', 'code');
 
 Settings::setPublic('api_url', 'https://api.imgur.com/3/');
 Settings::setPublic('token_url', 'https://api.imgur.com/oauth2/token');
